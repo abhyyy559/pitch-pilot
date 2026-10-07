@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pitch Pilot — Hackathon Pitch Coach</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">PP</div>
+    <div>
+      <h1>Pitch Pilot</h1>
+      <p>Hackathon pitch practice coach</p>
+    </div>
+  </div>
+  <div class="target-chip">Target pace <strong>160 WPM</strong> &middot; Chrome + mic required</div>
+</header>
+
+<div id="alertBanner" class="alert hidden" role="status"></div>
+<div id="errorBanner" class="error hidden" role="alert"></div>
+
+<main class="layout">
+  <!-- Left: live practice -->
+  <section class="card hero">
+    <div class="mic-row">
+      <button id="micBtn" class="mic" aria-pressed="false" aria-label="Start listening">
+        <span class="mic-icon">🎙</span>
+        <span class="mic-ring"></span>
+      </button>
+      <div class="mic-meta">
+        <div id="micLabel" class="mic-label">Ready — tap mic to start</div>
+        <div id="sessionClock" class="session-clock">00:00 speaking</div>
+      </div>
+      <div class="timer-box" id="timerBox">
+        <div id="timerDisplay" class="timer">05:00</div>
+        <div class="timer-btns">
+          <button id="timerStart" class="btn small">Start</button>
+          <button id="timerPause" class="btn small ghost">Pause</button>
+          <button id="timerReset" class="btn small ghost">Reset</button>
+        </div>
+        <div class="timer-bar"><div id="timerFill" class="timer-fill"></div></div>
+        <div class="timer-hint">5-min countdown • yellow at 1:00 • red at 0:30</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">Pace</span>
+        <span id="wpmValue" class="stat-big">—</span>
+        <span id="wpmPill" class="pill idle">idle</span>
+        <span id="wpmHint" class="stat-sub">Tap mic and speak</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Filler words</span>
+        <span id="fillerTotal" class="stat-big">0</span>
+        <span id="wordCount" class="stat-sub">0 words</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Score preview</span>
+        <span id="scorePreview" class="stat-big">—</span>
+        <span class="stat-sub">saved on stop / 0:00</span>
+      </div>
+    </div>
+
+    <h2>Live transcript</h2>
+    <div id="transcript" class="transcript" aria-live="polite"><span class="placeholder">Your words will appear here as you speak…</span></div>
+
+    <h3>Filler breakdown</h3>
+    <div id="fillerBreakdown" class="chips"><span class="placeholder">No fillers yet.</span></div>
+
+    <div id="fallbackPanel" class="fallback hidden">
+      <h3>Manual practice (mic unavailable)</h3>
+      <p>Speech recognition is Chrome-only. Type below to test fillers, pace &amp; saving.</p>
+      <textarea id="fallbackText" rows="4" placeholder="Type your pitch here, e.g. So basically I mean like…"></textarea>
+      <div class="row">
+        <button id="fallbackUse" class="btn small">Use typed text</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Right: history -->
+  <aside class="card history">
+    <div class="history-head">
+      <h2>Session history</h2>
+      <button id="clearHistory" class="btn small ghost">Clear all</button>
+    </div>
+    <p class="muted">Saved in this browser (localStorage) — date, duration, words, fillers, avg pace, score /100.</p>
+    <div id="historyList" class="history-list"></div>
+    <footer class="foot">No backend • No APIs • Web Speech API • localStorage key <code>pitchPilot.sessions.v1</code></footer>
+  </aside>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
